@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Payment Success</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <h1>Payment Successful ✅</h1>
+  <p>Thank you! Here are your download links:</p>
+  <div id="downloads"></div>
+  <script src="js/games.js"></script>
+  <script>
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const downloads = document.getElementById('downloads');
+    cart.forEach(id => {
+      const game = games.find(g => g.id === id);
+      if (game) {
+        const link = document.createElement('a');
+        link.href = game.download;
+        link.textContent = `Download ${game.name}`;
+        link.download = true;
+        link.style.display = 'block';
+        downloads.appendChild(link);
+      }
+    });
+    localStorage.clear();
+  </script>
+</body>
+</html>

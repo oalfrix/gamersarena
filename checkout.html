@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Checkout</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <h1>Checkout</h1>
+  <form action="https://pay.pesapal.com/v3/api/PostPesapalDirectOrderV4" method="POST">
+    <input type="hidden" name="amount" id="amount" value="">
+    <input type="hidden" name="description" value="Game Purchase">
+    <input type="hidden" name="type" value="MERCHANT">
+    <input type="hidden" name="reference" value="ORDER123">
+    <input type="hidden" name="callback_url" value="https://yourdomain.com/success.html">
+    <input type="hidden" name="email" value="customer@example.com">
+    <button type="submit">Pay with M-Pesa</button>
+  </form>
+  <script src="js/games.js"></script>
+  <script src="js/checkout.js"></script>
+
+<h2>Processing Payment via Pesapal</h2>
+<iframe id="pesapal_iframe" width="100%" height="600px" frameborder="0"></iframe>
+
+<script>
+  fetch('/.netlify/functions/create-pesapal-order')
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById('pesapal_iframe').src = data.url;
+    })
+    .catch(err => {
+      console.error("Failed to load Pesapal:", err);
+    });
+</script>
+
+</body>
+</html>
